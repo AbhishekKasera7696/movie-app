@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { api } from '../api';
+import { api } from '../api'; // Make sure api.js uses baseURL = '/api' for Vercel
 import { Link, useNavigate } from 'react-router-dom';
 import MovieCard from '../components/MovieCard';
 import './MovieList.css';
@@ -8,28 +8,25 @@ const MovieList = () => {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [totalPages, setTotalPages] = useState(1); // optional if backend returns total count
+  const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
 
   const fetchMovies = async () => {
     setLoading(true);
     try {
       const res = await api.get(`/movies?page=${page}&limit=6`);
-      let movieData = [];
 
-      // Safely check response structure
-      if (Array.isArray(res.data)) {
-        movieData = res.data;
-      } else if (res.data && Array.isArray(res.data.data)) {
-        movieData = res.data.data;
-      } else {
-        movieData = [];
-      }
+      // Normalize response to always be an array
+      const movieData = Array.isArray(res.data)
+        ? res.data
+        : res.data?.data && Array.isArray(res.data.data)
+        ? res.data.data
+        : [];
 
       setMovies(movieData);
 
-      // Optional: calculate total pages if backend returns total count
-      if (res.data && res.data.total) {
+      // Optional: handle total pages if backend returns total count
+      if (res.data?.total) {
         setTotalPages(Math.ceil(res.data.total / 6));
       }
     } catch (err) {

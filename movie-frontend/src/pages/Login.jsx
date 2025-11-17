@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './Login.css';
 import axios from "axios";
+import { api } from '../api'; 
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -22,17 +24,18 @@ const Login = () => {
 const handleSubmit = async (e) => {
   e.preventDefault();
   try {
-    const res = await axios.post("http://localhost:3000/auth/login", {
+    const res = await api.post("/auth/login", {
       email,
       password,
     });
+
     localStorage.setItem("token", res.data.access_token);
     navigate("/movies");
   } catch (err) {
     alert("Invalid credentials");
+    console.error(err);
   }
 };
-
   return (
     <div className="login-container">
       <form onSubmit={handleSubmit} className="login-form">
