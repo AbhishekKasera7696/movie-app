@@ -18,7 +18,7 @@ export class MoviesService {
 //     return this.movieModel.find().exec();
 //   }
 
-findAll(page = 1, limit = 5) {
+findAll(page = 1, limit = 6) {
   const skip = (page - 1) * limit;
   return this.movieModel.find().skip(skip).limit(limit).exec();
 }

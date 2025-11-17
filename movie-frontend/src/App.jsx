@@ -1,24 +1,3 @@
-// import React from 'react';
-// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// import Login from './pages/Login';
-// import MovieList from './pages/MovieList';
-// import AddMovie from './pages/AddMovie';
-
-// const App = () => {
-//   return (
-//     <Router>
-//       <Routes>
-//         <Route path="/" element={<Login />} />
-//         <Route path="/movies" element={<MovieList />} />
-//         <Route path="/add-movie" element={<AddMovie />} />
-//       </Routes>
-//     </Router>
-//   );
-// };
-
-// export default App;
-
-
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
