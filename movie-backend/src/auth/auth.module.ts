@@ -11,7 +11,8 @@ import { JwtStrategy } from './jwt.strategy';
     UsersModule,
     PassportModule,
     JwtModule.register({
-      secret: 'secretKey123',
+      secret: `8b4491d775dfcd4a70a30ac527922c1031023e74a5ecd69f7e94dd13477919bf6a899c92a94c34eb2edd9c04f458c8d50eb344215b671b41111a541c
+59dde72b` ,
       signOptions: { expiresIn: '1h' },
     }),
   ],
