@@ -1,7 +1,9 @@
 import axios from 'axios';
 
-const isVercel = window.location.hostname.endsWith('.vercel.app');
-const baseURL = isVercel ? '/api' : 'http://localhost:3000'; 
+const baseURL = window.location.hostname.endsWith('.vercel.app')
+  ? 'http://13.204.47.170:3000'  
+  : 'http://localhost:3000';   
+
 
 const api = axios.create({ baseURL });
 
