@@ -11,35 +11,64 @@ const MovieList = () => {
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
 
+//   const fetchMovies = async () => {
+//     setLoading(true);
+//     try {
+//       const res = await api.get(`/movies?page=${page}&limit=6`);
+
+//       const movieData = Array.isArray(res.data)
+//         ? res.data
+//         : res.data?.data && Array.isArray(res.data.data)
+//         ? res.data.data
+//         : [];
+
+//       setMovies(movieData);
+
+//       if (res.data?.total) {
+//         setTotalPages(Math.ceil(res.data.total / 6));
+//       }
+//     } catch (err) {
+//       console.error('Error fetching movies:', err);
+//       setMovies([]);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   useEffect(() => {
+//     fetchMovies();
+//   }, [page]);
+
+useEffect(() => {
   const fetchMovies = async () => {
     setLoading(true);
     try {
       const res = await api.get(`/movies?page=${page}&limit=6`);
+      let movieData = [];
 
-      // Normalize response to always be an array
-      const movieData = Array.isArray(res.data)
-        ? res.data
-        : res.data?.data && Array.isArray(res.data.data)
-        ? res.data.data
-        : [];
+      if (Array.isArray(res.data.data)) {
+        movieData = res.data.data;
+      } else if (Array.isArray(res.data)) {
+        movieData = res.data;
+      }
 
       setMovies(movieData);
 
-      // Optional: handle total pages if backend returns total count
-      if (res.data?.total) {
+      // set total pages based on total count
+      if (res.data.total) {
         setTotalPages(Math.ceil(res.data.total / 6));
       }
     } catch (err) {
-      console.error('Error fetching movies:', err);
+      console.error(err);
       setMovies([]);
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchMovies();
-  }, [page]);
+  fetchMovies();
+}, [page]);
+
 
   const handleDelete = async (id) => {
     try {
